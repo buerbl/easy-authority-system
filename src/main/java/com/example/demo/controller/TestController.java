@@ -21,6 +21,18 @@ public class TestController {
         model.addAttribute("name", "布尔bl");
         return "hello";
     }
+
+    @GetMapping("/add")
+    public String add(){
+        log.info("测试增加用户");
+        return "/user/add";
+    }
+
+    @GetMapping("/update")
+    public String update(){
+        log.info("测试更新用户");
+        return "/user/update";
+    }
 }
 
 
