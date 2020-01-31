@@ -36,7 +36,7 @@ public class TestController {
 
     @GetMapping("/tologin")
     public String tologin(){
-        log.info("测试更新用户");
+        log.info("测试拦截");
         return "login";
     }
 }
