@@ -33,6 +33,12 @@ public class TestController {
         log.info("测试更新用户");
         return "/user/update";
     }
+
+    @GetMapping("/tologin")
+    public String tologin(){
+        log.info("测试更新用户");
+        return "login";
+    }
 }
 
 

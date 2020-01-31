@@ -50,7 +50,7 @@
 <!--        引入 shrio-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
+            <artifactId>shiro-spring-boot-starter</artifactId>
             <version>1.4.0</version>
         </dependency>
     </dependencies>
