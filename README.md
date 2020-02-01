@@ -1,5 +1,9 @@
 # easy-authority-system
 
+## 效果
+
+![](http://javahouse.xyz/shiro.gif)
+
 ## 分析 Shrio 的核心 API
 
 Subject : 用户主体（把操作交给 SecurityManager）  
@@ -15,9 +19,7 @@ Realm ：Shiro 连接数据的桥梁
     <version>1.4.0</version>
 </dependency>
 ```
-## 效果
 
-![](http://javahouse.xyz/shiro.gif)
 
 ## 简单拦截
 
