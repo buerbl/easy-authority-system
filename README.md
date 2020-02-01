@@ -2,9 +2,9 @@
 
 ## 分析 Shrio 的核心 API
 
-Subject : 用户主体（把操作交给 SecurityManager）
-SecurityManager : 安全管理器（关联 Realm）
-Realm ：Shiro 连接数据的桥梁
+Subject : 用户主体（把操作交给 SecurityManager）  
+SecurityManager : 安全管理器（关联 Realm）  
+Realm ：Shiro 连接数据的桥梁  
 
 ## shiro 引入
 
@@ -46,5 +46,30 @@ public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityMana
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilterFactoryBean;
+    }
+```
+
+## 认证
+
+```java
+public String login(String name, String password, Model model){
+        log.info("登录");
+        log.info(name+"+"+password);
+        // 1. 获取 Subject
+        Subject subject  = SecurityUtils.getSubject();
+
+        // 2. 封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(name, password);
+        try {
+            subject.login(token);
+
+        } catch (UnknownAccountException e){
+            model.addAttribute("msg", "用户名不存在");
+            return "login";
+        }catch (IncorrectCredentialsException e){
+            model.addAttribute("msg", "密码错误");
+            return "login";
+        }
+        return "login";
     }
 ```

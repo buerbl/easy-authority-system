@@ -17,30 +17,8 @@ import java.util.Map;
 @Configuration
 public class ShrioConfig {
 
-
-
-
-    /**
-     * 创建 DefaultWebSecurityManager
-     */
-    @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm){
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 关联realm
-        securityManager.setRealm(userRealm);
-        return securityManager;
-    }
-
-    /**
-     * 创建 Realm
-     */
-    @Bean(name = "userRealm")
-    public UserRealm getRealm(){
-        return new UserRealm();
-    }
-
     @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
 
 
@@ -59,6 +37,7 @@ public class ShrioConfig {
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/test", "anon");
+        filterMap.put("/login", "anon");
         // 拦截所有
         filterMap.put("/*", "authc");
 
@@ -68,6 +47,27 @@ public class ShrioConfig {
 
         return shiroFilterFactoryBean;
     }
+
+    /**
+     * 创建 DefaultWebSecurityManager
+     */
+    @Bean(name = "defaultWebSecurityManager")
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm){
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 关联realm
+        securityManager.setRealm(userRealm);
+        return securityManager;
+    }
+
+    /**
+     * 创建 Realm
+     */
+    @Bean(name = "userRealm")
+    public UserRealm getRealm(){
+        return new UserRealm();
+    }
+
+
 }
 
 
