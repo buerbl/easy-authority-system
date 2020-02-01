@@ -15,6 +15,9 @@ Realm ：Shiro 连接数据的桥梁
     <version>1.4.0</version>
 </dependency>
 ```
+## 效果
+
+![](http://javahouse.xyz/shiro.gif)
 
 ## 简单拦截
 
