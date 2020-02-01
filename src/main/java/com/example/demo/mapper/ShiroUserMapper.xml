@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ShiroUserMapper">
+
+    <select id="getUser" resultType="com.example.demo.entity.ShiroUser">
+        SELECT
+        *
+        FROM
+        shiro_user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        <if test="password != null">
+            AND PASSWORD = #{password}
+        </if>
+    </select>
+</mapper>

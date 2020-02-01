@@ -17,6 +17,7 @@ import java.util.Map;
 @Configuration
 public class ShrioConfig {
 
+
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("defaultWebSecurityManager") DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -38,15 +39,22 @@ public class ShrioConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/test", "anon");
         filterMap.put("/login", "anon");
+
+        filterMap.put("/add","perms[add]");
+        filterMap.put("/update","perms[update]");
         // 拦截所有
         filterMap.put("/*", "authc");
 
 
+
         shiroFilterFactoryBean.setLoginUrl("/tologin");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/noauto");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilterFactoryBean;
     }
+
+
 
     /**
      * 创建 DefaultWebSecurityManager

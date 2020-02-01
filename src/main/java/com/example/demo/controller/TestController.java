@@ -46,6 +46,12 @@ public class TestController {
         return "login";
     }
 
+    @GetMapping("/noauto")
+    public String noauto(){
+        log.info("测试授权拦截");
+        return "noauto";
+    }
+
     @PostMapping("/login")
     public String login(String name, String password, Model model){
         log.info("登录");

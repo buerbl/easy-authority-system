@@ -1,10 +1,16 @@
 package com.example.demo.config;
 
+import com.example.demo.entity.ShiroUser;
+import com.example.demo.service.IShiroUserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Description:
@@ -23,9 +29,17 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         log.info("执行授权逻辑");
-        return null;
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+//        info.addStringPermission("add");
+        Subject subject = SecurityUtils.getSubject();
+        ShiroUser user = (ShiroUser) subject.getPrincipal();
+        info.addStringPermission(user.getRole());
+        return info;
     }
 
+
+    @Autowired
+    private IShiroUserService shiroUserService;
     /**
      * 执行认证逻辑
      * @param token
@@ -35,18 +49,16 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         log.info("执行认证逻辑");
-        String name = "root";
-        String password = "123";
 
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
-
+        ShiroUser user = shiroUserService.getUser(token1.getUsername(), String.copyValueOf(token1.getPassword()));
         // 判断用户名
-        if (!token1.getUsername().equals(name)){
+        if (user==null){
             return null; //shiro 抛出 UnaKnowAccountException
         }
 
         // 判断密码
-        return new SimpleAuthenticationInfo("", password, "");
+        return new SimpleAuthenticationInfo(user, user.getPassword(), "");
     }
 }
 
