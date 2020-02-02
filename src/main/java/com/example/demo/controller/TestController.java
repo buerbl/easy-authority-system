@@ -1,17 +1,23 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ShiroUser;
+import com.example.demo.util.Code;
+import com.example.demo.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -21,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class TestController {
+public class TestController extends BaseResult{
     @GetMapping("/test")
     public String test(Model model){
         log.info("测试thymeleaf");
@@ -43,9 +49,9 @@ public class TestController {
     }
 
     @GetMapping("/tologin")
-    public String tologin(){
+    public Result tologin(){
         log.info("测试拦截");
-        return "login";
+        return getResult(Code.ERROR.getMsg(), Code.ERROR.getCode());
     }
 
     @GetMapping("/noauto")
@@ -55,12 +61,12 @@ public class TestController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody ShiroUser dto){
+    public Result login(@RequestBody ShiroUser dto){
         log.info("登录");
         log.info(dto.getName()+"+"+dto.getPassword());
         // 1. 获取 Subject
         Subject subject  = SecurityUtils.getSubject();
-
+        Session session = subject.getSession();
         // 2. 封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(dto.getName(), dto.getPassword());
         try {
@@ -68,12 +74,19 @@ public class TestController {
 
         } catch (UnknownAccountException e){
             log.info("msg", "用户名不存在");
-            return "login";
+            return getResult("用户名不存在", Code.USERNAMEERROR.getCode());
         }catch (IncorrectCredentialsException e){
-            log.info("msg", "密码错误");
-            return "login";
+            log.info( "密码错误");
+            return getResult("密码错误", Code.PASSWORDERROR.getCode());
         }
-        return "hello";
+        return getResult(session.getId().toString(), Code.SUCCESS.getCode());
+    }
+
+    @PostMapping("/app")
+    public Result app(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        log.info("session为:{}", session.getId());
+        return getResult(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
     }
 }
 
