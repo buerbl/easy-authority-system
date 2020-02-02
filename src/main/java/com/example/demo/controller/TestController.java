@@ -1,15 +1,17 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.ShiroUser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @Author: boolean
  * @Date: 2020/1/31 21:48
  */
-@Controller
+@RestController
 @Slf4j
 public class TestController {
     @GetMapping("/test")
@@ -53,22 +55,22 @@ public class TestController {
     }
 
     @PostMapping("/login")
-    public String login(String name, String password, Model model){
+    public String login(@RequestBody ShiroUser dto){
         log.info("登录");
-        log.info(name+"+"+password);
+        log.info(dto.getName()+"+"+dto.getPassword());
         // 1. 获取 Subject
         Subject subject  = SecurityUtils.getSubject();
 
         // 2. 封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken(name, password);
+        UsernamePasswordToken token = new UsernamePasswordToken(dto.getName(), dto.getPassword());
         try {
             subject.login(token);
 
         } catch (UnknownAccountException e){
-            model.addAttribute("msg", "用户名不存在");
+            log.info("msg", "用户名不存在");
             return "login";
         }catch (IncorrectCredentialsException e){
-            model.addAttribute("msg", "密码错误");
+            log.info("msg", "密码错误");
             return "login";
         }
         return "hello";

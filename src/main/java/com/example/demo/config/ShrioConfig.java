@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -39,7 +40,7 @@ public class ShrioConfig {
         Map<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/test", "anon");
         filterMap.put("/login", "anon");
-
+        filterMap.put("/logout", "anon");
         filterMap.put("/add","perms[add]");
         filterMap.put("/update","perms[update]");
         // 拦截所有
@@ -55,7 +56,15 @@ public class ShrioConfig {
     }
 
 
-
+    /**
+     * 自定义sessionManager
+     * @return
+     */
+    @Bean
+    public SessionManager sessionManager(){
+        ShiroSessionManager shiroSessionManager = new ShiroSessionManager();
+        return shiroSessionManager;
+    }
     /**
      * 创建 DefaultWebSecurityManager
      */
@@ -64,6 +73,8 @@ public class ShrioConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 关联realm
         securityManager.setRealm(userRealm);
+        //自定义session管理
+        securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
