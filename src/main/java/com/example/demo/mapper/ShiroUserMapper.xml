@@ -15,4 +15,28 @@
             AND PASSWORD = #{password}
         </if>
     </select>
+
+    <select id="getUserPage" resultType="com.example.demo.entity.ShiroUser">
+        SELECT
+        *
+        FROM
+        shiro_user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        limit #{start}, #{size}
+    </select>
+
+    <select id="getTotal" resultType="integer">
+        SELECT
+        count(1)
+        FROM
+        shiro_user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        limit #{start}, #{size}
+    </select>
 </mapper>

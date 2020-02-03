@@ -4,6 +4,8 @@ import com.example.demo.entity.ShiroUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Description:
  * @Author: boolean
@@ -12,6 +14,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface ShiroUserMapper {
      ShiroUser getUser(@Param("name") String name, @Param("password") String password);
+
+     List<ShiroUser> getUserPage(@Param("name") String name,@Param("start") Integer start, @Param("size")Integer size);
+
+     Integer getTotal (@Param("name") String name, @Param("start") Integer start, @Param("size")Integer size);
 }
 
 

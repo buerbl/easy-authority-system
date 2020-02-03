@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ShiroUserDto;
 import com.example.demo.entity.ShiroUser;
+import com.example.demo.service.IShiroUserService;
 import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
 import com.example.demo.util.Result;
+import com.example.demo.vo.ShiroUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -11,6 +14,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +33,9 @@ import javax.servlet.http.HttpSession;
 @RestController
 @Slf4j
 public class ShiroUserController extends BaseResult {
+
+    @Autowired
+    private IShiroUserService shiroUserService;
     @GetMapping("/test")
     public String test(Model model){
         log.info("测试thymeleaf");
@@ -89,6 +96,14 @@ public class ShiroUserController extends BaseResult {
         log.info("session为:{}", session.getId());
         return getResult(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
     }
+
+    @GetMapping
+    public Result getShiroUser(@RequestBody ShiroUserDto dto){
+        log.info("dto为：{}", dto.toString());
+        ShiroUserVo shiroUserVo = shiroUserService.getUserPage(dto);
+        return getResult(shiroUserVo, Code.SUCCESS.getCode());
+    }
+
 }
 
 

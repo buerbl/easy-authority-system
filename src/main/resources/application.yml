@@ -3,3 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/dev?serverTimezone=GMT%2B8
     username: root
     password: 123456
+
+# 打印 mybatis 的 sql
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
