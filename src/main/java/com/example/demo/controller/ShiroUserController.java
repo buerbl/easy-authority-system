@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ShiroUser;
+import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
 import com.example.demo.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @Slf4j
-public class ShiroUserController extends BaseResult{
+public class ShiroUserController extends BaseResult {
     @GetMapping("/test")
     public String test(Model model){
         log.info("测试thymeleaf");
