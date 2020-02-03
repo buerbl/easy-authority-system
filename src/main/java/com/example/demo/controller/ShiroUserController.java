@@ -27,7 +27,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @Slf4j
-public class TestController extends BaseResult{
+public class ShiroUserController extends BaseResult{
     @GetMapping("/test")
     public String test(Model model){
         log.info("测试thymeleaf");

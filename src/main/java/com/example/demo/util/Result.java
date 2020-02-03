@@ -16,9 +16,6 @@ public class Result<T> {
     private T data;
     private Integer code;
 
-    public  Result getResult(T data, Integer code){
-        return new Result(data, code);
-    }
 
 }
 
