@@ -97,8 +97,8 @@ public class ShiroUserController extends BaseResult {
         return getResult(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
     }
 
-    @GetMapping
-    public Result getShiroUser(@RequestBody ShiroUserDto dto){
+    @PostMapping("/getUserPage")
+    public Result getUserPage(@RequestBody ShiroUserDto dto){
         log.info("dto为：{}", dto.toString());
         ShiroUserVo shiroUserVo = shiroUserService.getUserPage(dto);
         return getResult(shiroUserVo, Code.SUCCESS.getCode());
