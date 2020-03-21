@@ -1,5 +1,9 @@
 # easy-authority-system
 
+## 在线访问
+
+[demo](http://47.105.202.146:8081/)
+
 ## 效果
 
 ![](http://javahouse.xyz/shiro.gif)
