@@ -12,17 +12,15 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 /**
@@ -32,40 +30,23 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @Slf4j
-public class ShiroUserController extends BaseResult {
+public class ShiroLoginController extends BaseResult {
 
     @Autowired
     private IShiroUserService shiroUserService;
-    @GetMapping("/test")
-    public String test(Model model){
-        log.info("测试thymeleaf");
-        // 那数据放进 model
-        model.addAttribute("name", "布尔bl");
-        return "hello";
-    }
 
-    @GetMapping("/add")
-    public String add(){
-        log.info("测试增加用户");
-        return "/user/add";
-    }
 
-    @GetMapping("/update")
-    public String update(){
-        log.info("测试更新用户");
-        return "/user/update";
-    }
 
     @GetMapping("/tologin")
     public Result tologin(){
-        log.info("测试拦截");
-        return getResult(Code.ERROR.getMsg(), Code.ERROR.getCode());
+        log.info("没有登录");
+        return getResult(Code.NOSIGNIN.getMsg(), Code.NOSIGNIN.getCode());
     }
 
     @GetMapping("/noauto")
-    public String noauto(){
-        log.info("测试授权拦截");
-        return "noauto";
+    public Result noauto(){
+        log.info("没有授权");
+        return getResult(Code.NORIGHT.getMsg(), Code.NORIGHT.getCode());
     }
 
     @PostMapping("/login")
@@ -87,22 +68,18 @@ public class ShiroUserController extends BaseResult {
             log.info( "密码错误");
             return getResult("密码错误", Code.PASSWORDERROR.getCode());
         }
+        log.info("我的凭证:{}",session.getId().toString());
         return getResult(session.getId().toString(), Code.SUCCESS.getCode());
     }
-
-    @PostMapping("/app")
-    public Result app(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        log.info("session为:{}", session.getId());
-        return getResult(Code.SUCCESS.getMsg(), Code.SUCCESS.getCode());
+    @GetMapping("/logout")
+    public Result logot(){
+        log.info("登出");
+        return getResult("退出", Code.SUCCESS.getCode());
     }
 
-    @PostMapping("/getUserPage")
-    public Result getUserPage(@RequestBody ShiroUserDto dto){
-        log.info("dto为：{}", dto.toString());
-        ShiroUserVo shiroUserVo = shiroUserService.getUserPage(dto);
-        return getResult(shiroUserVo, Code.SUCCESS.getCode());
-    }
+
+
+
 
 }
 
