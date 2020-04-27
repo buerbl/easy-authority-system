@@ -43,4 +43,12 @@ public class UserControllerController extends BaseResult {
         return getResult(userVo, Code.SUCCESS.getCode());
     }
 
+    @PostMapping("/changeStatuFlag")
+    public Result changeStatuFlag(@RequestBody UserDto dto){
+        log.info("dto为：{}", dto.toString());
+//        UserVo userVo = userService.getUserPage(dto);
+//        return getResult(userVo, Code.SUCCESS.getCode());
+        return getResult(userService.changeStatuFlag(dto), Code.SUCCESS.getCode());
+//        return null;
+    }
 }

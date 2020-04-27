@@ -6,6 +6,7 @@
         <result property="name" column="name"></result>
         <result property="password" column="password"></result>
         <result property="adress" column="adress"></result>
+        <result property="status" column="status"></result>
         <collection property="roleList" ofType="com.example.demo.entity.Role"
                     resultMap="role" columnPrefix="role_"
         ></collection>
@@ -27,6 +28,20 @@
                     ofType="com.example.demo.entity.Permisson"
                     select="getChildren">
         </collection>
+    </resultMap>
+    <resultMap id="userAndRole" type="com.example.demo.entity.User">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="password" column="password"></result>
+        <result property="adress" column="adress"></result>
+        <result property="status" column="status"></result>
+        <collection property="roleList" ofType="com.example.demo.entity.Role"
+                    resultMap="roleListNoPermisson"
+        ></collection>
+    </resultMap>
+    <resultMap id="roleListNoPermisson" type="com.example.demo.entity.Role">
+        <id property="id" column="rid"></id>
+        <result property="roleName" column="role_name"></result>
     </resultMap>
 
     <sql id="role_Column_List">
@@ -82,13 +97,18 @@
         </if>
     </select>
 
-    <select id="getUserPage" resultType="com.example.demo.entity.User">
+    <select id="getUserPage" resultMap="userAndRole">
         SELECT
-        *
+        u.*,
+        r.id as rid,
+        r.role_name
         FROM
-        user
-        WHERE 1=1
-        <if test="name != null">
+        USER u
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role r ON ur.role_id = r.id
+        WHERE
+        1 =1
+        <if test="name != null and  name!=''" >
             and NAME = #{name}
         </if>
         limit #{start}, #{size}
@@ -97,11 +117,20 @@
         SELECT
         count(1)
         FROM
-        shiro_user
-        WHERE 1=1
-        <if test="name != null">
+        USER u
+        LEFT JOIN user_role ur ON u.id = ur.user_id
+        LEFT JOIN role r ON ur.role_id = r.id
+        WHERE
+        1 =1
+        <if test="name != null and  name!=''">
             and NAME = #{name}
         </if>
         limit #{start}, #{size}
     </select>
+    <update id="changeStatuFlag" >
+        UPDATE USER
+            SET `status` = #{flag}
+        WHERE
+        id = #{id}
+    </update>
 </mapper>

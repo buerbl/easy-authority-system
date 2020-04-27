@@ -24,6 +24,8 @@ public interface UserMapper {
      List<User> getUserPage(@Param("name") String name,@Param("start") Integer start, @Param("size")Integer size);
 
      Integer getTotal (@Param("name") String name, @Param("start") Integer start, @Param("size")Integer size);
+
+    Boolean changeStatuFlag(@Param("flag") Integer flag, @Param("id") Integer id);
 }
 
 

@@ -22,6 +22,8 @@ public class User {
     private String password;
     private String adress;
 
-    private String role;
+    private Integer status;
+    private Boolean statuFlag;
+
     private List<Role> roleList;
 }
