@@ -1,14 +1,18 @@
 package com.example.demo.service.Impl;
 
-import com.alibaba.fastjson.JSON;
-import com.example.demo.entity.Permisson;
-import com.example.demo.entity.Role;
+import com.example.demo.dto.UserDto;
+import com.example.demo.entity.ShiroUser;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
+import com.example.demo.vo.ShiroUserVo;
+import com.example.demo.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -21,25 +25,32 @@ import org.springframework.stereotype.Service;
 public class UserServieImpl implements IUserService {
     @Autowired
     private UserMapper userMapper;
-    public User getUser(User user) {
-        User origin = userMapper.getUser(user);
-        for (Role role : origin.getRoleList()){
-           log.info(JSON.toJSONString(role.getPermissonList()));
-            if (role.getRoleName().equals("admin")){
-                handle(role);
-                break;
-            }
-            handle(role);
-
-        }
-        return userMapper.getUser(user);
+    public User getUserInfo(User user) {
+        return userMapper.getUserInfo(user);
     }
 
-    private void handle(Role role) {
-        for (Permisson permisson : role.getPermissonList()){
-
-        }
+    @Override
+    public User getUser(String name, String password) {
+        log.info("name为{}, password为{}", name, password);
+        return userMapper.getUser(name, password);
     }
+
+    @Override
+    public UserVo getUserPage(UserDto dto) {
+        String name = Optional.ofNullable(dto.getUser()).map(User::getName).orElse(null);
+        String adress = Optional.ofNullable(dto.getUser()).map(User::getAdress).orElse(null);
+        Integer start = ( dto.getPagenum() - 1 ) * dto.getSize();
+        Integer size = dto.getSize();
+        List<User> userPage = userMapper.getUserPage(name, start, size);
+
+        Integer total = userMapper.getTotal(name, start, size);
+        UserVo userVo = new UserVo();
+        userVo.setUserList(userPage);
+        userVo.setTotal(total);
+        return userVo;
+
+    }
+
 }
 
 

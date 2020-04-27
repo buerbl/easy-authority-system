@@ -39,7 +39,7 @@
      permission.type_path as role_permission_type_path,
     permission.type_pid as role_permission_type_pid
 </sql>
-    <select id="getUser" resultMap="user">
+    <select id="getUserInfo" resultMap="user">
         SELECT
         `user`.*,
         <include refid="role_Column_List"/>
@@ -66,5 +66,42 @@
         <if test="pid != null">
             where type_pid = #{pid}
         </if>
+    </select>
+
+    <select id="getUser" resultType="com.example.demo.entity.User">
+        SELECT
+        *
+        FROM
+        user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        <if test="password != null">
+            AND PASSWORD = #{password}
+        </if>
+    </select>
+
+    <select id="getUserPage" resultType="com.example.demo.entity.User">
+        SELECT
+        *
+        FROM
+        user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        limit #{start}, #{size}
+    </select>
+    <select id="getTotal" resultType="integer">
+        SELECT
+        count(1)
+        FROM
+        shiro_user
+        WHERE 1=1
+        <if test="name != null">
+            and NAME = #{name}
+        </if>
+        limit #{start}, #{size}
     </select>
 </mapper>
