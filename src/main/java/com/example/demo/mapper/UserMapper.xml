@@ -103,7 +103,7 @@
         r.id as rid,
         r.role_name
         FROM
-        USER u
+        user u
         LEFT JOIN user_role ur ON u.id = ur.user_id
         LEFT JOIN role r ON ur.role_id = r.id
         WHERE
@@ -111,13 +111,16 @@
         <if test="name != null and  name!=''" >
             and NAME = #{name}
         </if>
-        limit #{start}, #{size}
+        <if test="name == null or  name==''" >
+            limit #{start}, #{size}
+        </if>
+
     </select>
     <select id="getTotal" resultType="integer">
         SELECT
         count(1)
         FROM
-        USER u
+        user u
         LEFT JOIN user_role ur ON u.id = ur.user_id
         LEFT JOIN role r ON ur.role_id = r.id
         WHERE
@@ -125,10 +128,10 @@
         <if test="name != null and  name!=''">
             and NAME = #{name}
         </if>
-        limit #{start}, #{size}
+
     </select>
     <update id="changeStatuFlag" >
-        UPDATE USER
+        UPDATE user
             SET `status` = #{flag}
         WHERE
         id = #{id}

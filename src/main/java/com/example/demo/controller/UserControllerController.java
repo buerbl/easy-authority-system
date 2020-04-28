@@ -35,7 +35,7 @@ public class UserControllerController extends BaseResult {
         User user = userService.getUserInfo(dto);
         return getResult(user, Code.SUCCESS.getCode());
     }
-    @RequiresPermissions("user:add")
+
     @PostMapping("/getUserPage")
     public Result getUserPage(@RequestBody UserDto dto){
         log.info("dto为：{}", dto.toString());
