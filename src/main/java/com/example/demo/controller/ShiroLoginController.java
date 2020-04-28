@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ShiroUserDto;
 import com.example.demo.entity.ShiroUser;
+import com.example.demo.service.IPermissionService;
+import com.example.demo.service.IRoleService;
 import com.example.demo.service.IShiroUserService;
 import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
 
 /**
@@ -34,8 +37,10 @@ public class ShiroLoginController extends BaseResult {
 
     @Autowired
     private IShiroUserService shiroUserService;
-
-
+    @Autowired
+    private IRoleService roleService;
+    @Autowired
+    private IPermissionService permissionService;
 
     @GetMapping("/tologin")
     public Result tologin(){
@@ -60,7 +65,6 @@ public class ShiroLoginController extends BaseResult {
         UsernamePasswordToken token = new UsernamePasswordToken(dto.getName(), dto.getPassword());
         try {
             subject.login(token);
-
         } catch (UnknownAccountException e){
             log.info("msg", "用户名不存在");
             return getResult("用户名不存在", Code.USERNAMEERROR.getCode());
@@ -69,6 +73,8 @@ public class ShiroLoginController extends BaseResult {
             return getResult("密码错误", Code.PASSWORDERROR.getCode());
         }
         log.info("我的凭证:{}",session.getId().toString());
+        String role = roleService.getRole(dto.getName());
+        permissionService.getPermisson(role);
         return getResult(session.getId().toString(), Code.SUCCESS.getCode());
     }
     @GetMapping("/logout")

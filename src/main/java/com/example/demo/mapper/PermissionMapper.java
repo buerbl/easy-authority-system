@@ -2,6 +2,7 @@ package com.example.demo.mapper;
 
 import com.example.demo.entity.Permisson;
 import com.example.demo.entity.Role;
+import com.example.demo.vo.PermissionVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
 public interface PermissionMapper {
     Role getPermission(Permisson permission);
     List<Permisson> getTree(int pid);
+
+    List<PermissionVO> getPermissionByroleName(String roleName);
 }
 
 

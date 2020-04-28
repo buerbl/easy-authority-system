@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface RoleMapper {
+    List<String> getRole(String name);
 }
 
 

@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.entity.ShiroUser;
+import com.example.demo.service.IPermissionService;
+import com.example.demo.service.IRoleService;
 import com.example.demo.service.IShiroUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -23,4 +25,20 @@ public class DemoApplicationTests {
         log.info("结果为:{}", user.toString());
     }
 
+    @Autowired
+    private IRoleService roleService;
+    @Test
+    public void test1(){
+        String name  = "root";
+        String role = roleService.getRole(name);
+        System.out.println(role);
+    }
+
+    @Autowired
+    private IPermissionService permissionService;
+    @Test
+    public void test2(){
+        String name  = "admin";
+        permissionService.getPermisson(name);
+    }
 }
