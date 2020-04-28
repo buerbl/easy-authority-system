@@ -51,12 +51,11 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-
         String name = user.getName();
         String roleName = roleService.getRole(name);
         List<PermissionVO> permissionVOS = permissionService.getPermissionList(roleName);
         permissionVOS.stream().forEach(permissionVO -> {
-            if (permissionVO.getTypePath().length() > 0 ){
+            if (permissionVO.getTypePath().length() > 0) {
                 info.addStringPermission(permissionVO.getTypePath());
             }
         });

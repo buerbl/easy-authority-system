@@ -4,7 +4,8 @@
 
 ## 效果
 
-![](http://javahouse.xyz/shiro.gif)
+![](http://javahouse.xyz/QQ截图20200429003509.png)
+
 
 ## 分析 Shrio 的核心 API
 
