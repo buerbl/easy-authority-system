@@ -7,6 +7,7 @@ import com.example.demo.mapper.PermissionMapper;
 import com.example.demo.service.IPermissionService;
 import com.example.demo.vo.PermissionVO;
 import com.example.demo.vo.UserVo;
+import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 /**
@@ -37,28 +39,43 @@ public class PermissionServieImpl implements IPermissionService {
     }
 
     @Override
-    public UserVo getPermisson(String roleName) {
+    public List<PermissionVO> getPermisson(String roleName) {
         if (Objects.isNull(roleName)){
             return null;
         }
         List<PermissionVO> permissons = permissionMapper.getPermissionByroleName(roleName);
         List<PermissionVO> result = new ArrayList<PermissionVO>();
-
         // 1、获取第一级节点
         for (PermissionVO permisson : permissons) {
             if(0 == permisson.getPpid()) {
                 result.add(permisson);
             }
         }
-
         // 2、递归获取子节点
         for (PermissionVO parent : result) {
             parent = recursiveTree(parent, permissons);
         }
-        log.info("结果：{}", JSONObject.toJSON(result));
-//        return result;
+        List<String> buttonPermissin = getButtonPermissin(permissons);
+        if (!result.isEmpty()) {
+            result.get(0).setButtonPermissin(buttonPermissin);
+        }
+        log.info("树形结果：{}", JSONObject.toJSON(result));
+        return result;
+//        return null;
+    }
 
-        return null;
+    private List<String> getButtonPermissin(List<PermissionVO> permissons) {
+        List<String> buttonPermissins = new ArrayList<>();
+        if (permissons.isEmpty()){
+            return null;
+        }
+        permissons.stream().forEach(a->{
+            String typePath = a.getTypePath();
+            if (typePath != null && typePath.length() != 0){
+                buttonPermissins.add(typePath);
+            }
+        });
+        return buttonPermissins;
     }
 
     private PermissionVO recursiveTree(PermissionVO parent, List<PermissionVO> list) {

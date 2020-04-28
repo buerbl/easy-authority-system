@@ -24,4 +24,5 @@ public class PermissionVO {
     private String typePath; // 权限路径
 
     public  List<PermissionVO> children = new ArrayList<PermissionVO>();;
+    public List<String> buttonPermissin =new ArrayList<>();
 }

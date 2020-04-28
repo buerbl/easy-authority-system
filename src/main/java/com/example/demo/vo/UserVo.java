@@ -15,7 +15,6 @@ import java.util.List;
 public class UserVo {
     private List<User> userList;
     private Integer total;
-
 }
 
 

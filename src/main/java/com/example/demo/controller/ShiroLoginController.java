@@ -8,6 +8,8 @@ import com.example.demo.service.IShiroUserService;
 import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
 import com.example.demo.util.Result;
+import com.example.demo.vo.LoginVO;
+import com.example.demo.vo.PermissionVO;
 import com.example.demo.vo.ShiroUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -74,8 +76,8 @@ public class ShiroLoginController extends BaseResult {
         }
         log.info("我的凭证:{}",session.getId().toString());
         String role = roleService.getRole(dto.getName());
-        permissionService.getPermisson(role);
-        return getResult(session.getId().toString(), Code.SUCCESS.getCode());
+        List<PermissionVO> permissonVOS = permissionService.getPermisson(role);
+        return getResult(new LoginVO(permissonVOS, session.getId().toString()), Code.SUCCESS.getCode());
     }
     @GetMapping("/logout")
     public Result logot(){

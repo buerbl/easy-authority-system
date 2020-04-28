@@ -31,9 +31,9 @@ public class RoleServieImpl implements IRoleService {
         log.info("sdasa:{}",roleMapper.getRole(name).toString());
         List<String> roles = roleMapper.getRole(name);
         if (!roles.isEmpty()){
-            return Objects.nonNull(roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).get(0))
-                    ?roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).get(0)
-                    :roles.get(0);
+            return roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).isEmpty()
+                    ?roles.get(0)
+                    :roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).get(0);
         }else {
             return "没有角色";
         }
