@@ -8,6 +8,7 @@ import com.example.demo.util.Code;
 import com.example.demo.util.Result;
 import com.example.demo.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +39,7 @@ public class UserControllerController extends BaseResult {
         return getResult(userVo, Code.SUCCESS.getCode());
     }
 
+    @RequiresPermissions("user-update")
     @PostMapping("/changeStatuFlag")
     public Result changeStatuFlag(@RequestBody UserDto dto){
         log.info("dto为：{}", dto.toString());

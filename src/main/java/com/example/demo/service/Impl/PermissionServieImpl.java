@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -45,6 +46,9 @@ public class PermissionServieImpl implements IPermissionService {
         }
         List<PermissionVO> permissons = permissionMapper.getPermissionByroleName(roleName);
         List<PermissionVO> result = new ArrayList<PermissionVO>();
+        if (permissons.isEmpty()) {
+            throw new RuntimeException("没有权限");
+        }
         // 1、获取第一级节点
         for (PermissionVO permisson : permissons) {
             if(0 == permisson.getPpid()) {
@@ -62,6 +66,11 @@ public class PermissionServieImpl implements IPermissionService {
         log.info("树形结果：{}", JSONObject.toJSON(result));
         return result;
 //        return null;
+    }
+
+    @Override
+    public List<PermissionVO> getPermissionList(String roleName) {
+        return permissionMapper.getPermissionByroleName(roleName);
     }
 
     private List<String> getButtonPermissin(List<PermissionVO> permissons) {
