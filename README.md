@@ -16,6 +16,10 @@ Subject : 用户主体（把操作交给 SecurityManager）
 SecurityManager : 安全管理器（关联 Realm）  
 Realm ：Shiro 连接数据的桥梁  
 
+## 数据库表
+
+![](http://javahouse.xyz/20200429084010.png)
+
 ## shiro 引入
 
 ```java
