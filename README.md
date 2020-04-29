@@ -9,7 +9,7 @@
 ![](http://javahouse.xyz/QQ截图20200429003509.png)
 
 ### 旧版本1
-![](http://javahouse.xyz/shiro.gif)
+![](/src/main/resources/picture/shiro.gif)
 ## 分析 Shrio 的核心 API
 
 Subject : 用户主体（把操作交给 SecurityManager）  
