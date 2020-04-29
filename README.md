@@ -18,8 +18,6 @@ Realm ：Shiro 连接数据的桥梁
 
 ## 数据库表
 
-![](http://javahouse.xyz/20200429084010.png)
-
 ![](/src/main/resources/picture/数据库表.png)
 ## shiro 引入
 
