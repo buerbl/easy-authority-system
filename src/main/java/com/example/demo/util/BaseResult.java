@@ -1,7 +1,5 @@
 package com.example.demo.util;
 
-import com.example.demo.util.Result;
-
 /**
  * @Description:
  * @Author: boolean

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ShiroUserDto;
 import com.example.demo.entity.ShiroUser;
 import com.example.demo.service.IPermissionService;
 import com.example.demo.service.IRoleService;
@@ -10,13 +9,11 @@ import com.example.demo.util.Code;
 import com.example.demo.util.Result;
 import com.example.demo.vo.LoginVO;
 import com.example.demo.vo.PermissionVO;
-import com.example.demo.vo.ShiroUserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

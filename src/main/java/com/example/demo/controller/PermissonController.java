@@ -2,9 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Permisson;
 import com.example.demo.entity.Role;
-import com.example.demo.entity.User;
 import com.example.demo.service.IPermissionService;
-import com.example.demo.service.IUserService;
 import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
 import com.example.demo.util.Result;

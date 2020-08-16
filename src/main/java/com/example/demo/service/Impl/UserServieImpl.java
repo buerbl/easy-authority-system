@@ -1,13 +1,10 @@
 package com.example.demo.service.Impl;
 
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.ShiroUser;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
-import com.example.demo.util.Result;
 import com.example.demo.util.StatusEnum;
-import com.example.demo.vo.ShiroUserVo;
 import com.example.demo.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

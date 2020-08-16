@@ -6,8 +6,6 @@ import com.example.demo.entity.Role;
 import com.example.demo.mapper.PermissionMapper;
 import com.example.demo.service.IPermissionService;
 import com.example.demo.vo.PermissionVO;
-import com.example.demo.vo.UserVo;
-import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**
