@@ -9,3 +9,11 @@ spring:
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# 输出到文件里面
+logging:
+  path: /logs #日志文件路径
+  file: ims.log #日志文件名称
+  level:
+    root: info #日志级别 root表示所有包，也可以单独配置具体包 fatal error warn info debug trace off
