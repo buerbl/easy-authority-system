@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class UserServieImpl implements IUserService {
+public class UserServiceImpl implements IUserService {
     @Resource
     private UserMapper userMapper;
 

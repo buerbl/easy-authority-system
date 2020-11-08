@@ -55,7 +55,7 @@ public class UserRealm extends AuthorizingRealm {
         String name = user.getName();
         String roleName = roleService.getRole(name);
         List<PermissionVO> permissionVOS = permissionService.getPermissionList(roleName);
-        if (CollectionUtils.isEmpty(permissionVOS)){
+        if (CollectionUtils.isEmpty(permissionVOS)) {
             return info;
         }
         permissionVOS.forEach(permissionVO -> {

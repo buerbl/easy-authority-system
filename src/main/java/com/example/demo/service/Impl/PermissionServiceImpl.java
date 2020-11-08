@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 @Service
 @Slf4j
-public class PermissionServieImpl implements IPermissionService {
+public class PermissionServiceImpl implements IPermissionService {
     @Resource
     private PermissionMapper permissionMapper;
 

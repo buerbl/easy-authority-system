@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @Service
 @Slf4j
-public class ShiroUserServieImpl implements IShiroUserService {
+public class ShiroUserServiceImpl implements IShiroUserService {
     @Resource
     private ShiroUserMapper shiroUserMapper;
 
