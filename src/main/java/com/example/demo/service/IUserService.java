@@ -9,6 +9,8 @@ public interface IUserService {
 
     User getUser(String name, String password);
 
+    User getUserByName(String name);
+
     UserVo getUserPage(UserDto dto);
 
     Boolean changeStatuFlag(UserDto dto);

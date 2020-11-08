@@ -37,6 +37,11 @@ public class UserServieImpl implements IUserService {
     }
 
     @Override
+    public User getUserByName(String name) {
+        return userMapper.getUserByName(name);
+    }
+
+    @Override
     public UserVo getUserPage(UserDto dto) {
         String name = Optional.ofNullable(dto.getUser()).map(User::getName).orElse(null);
         String adress = Optional.ofNullable(dto.getUser()).map(User::getAdress).orElse(null);

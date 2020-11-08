@@ -26,6 +26,8 @@ public interface UserMapper {
     Integer getTotal(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
     Boolean changeStatuFlag(@Param("flag") Integer flag, @Param("id") Integer id);
+
+    User getUserByName(@Param("name") String name);
 }
 
 

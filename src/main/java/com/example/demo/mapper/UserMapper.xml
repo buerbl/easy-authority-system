@@ -97,6 +97,12 @@
         </if>
     </select>
 
+    <select id="getUserByName" resultType="com.example.demo.entity.User">
+        SELECT *
+        FROM user
+        WHERE NAME = #{name}
+    </select>
+
     <select id="getUserPage" resultMap="userAndRole">
         SELECT
         u.*,

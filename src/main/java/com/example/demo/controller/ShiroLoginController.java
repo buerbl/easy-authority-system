@@ -42,50 +42,47 @@ public class ShiroLoginController extends BaseResult {
     private IPermissionService permissionService;
 
     @GetMapping("/tologin")
-    public Result tologin(){
+    public Result tologin() {
         log.info("没有登录");
         return getResult(Code.NOSIGNIN.getMsg(), Code.NOSIGNIN.getCode());
     }
 
     @GetMapping("/noauto")
-    public Result noauto(){
+    public Result noauto() {
         log.info("没有授权");
         return getResult(Code.NORIGHT.getMsg(), Code.NORIGHT.getCode());
     }
 
     @PostMapping("/login")
-    public Result login(@RequestBody ShiroUser dto){
-        log.info("登录");
-        log.info(dto.getName()+"+"+dto.getPassword());
+    public Result login(@RequestBody ShiroUser dto) {
+        log.info("登录开始");
+        log.info("用户名为[{}], 密码为[{}]",dto.getName(), dto.getPassword());
         // 1. 获取 Subject
-        Subject subject  = SecurityUtils.getSubject();
+        Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
         // 2. 封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(dto.getName(), dto.getPassword());
         try {
             subject.login(token);
-        } catch (UnknownAccountException e){
-            log.error("用户名[{}]]不存在", dto.getName());
+        } catch (UnknownAccountException e) {
+            log.error("用户名[{}]不存在", dto.getName());
             return getResult("用户名不存在", Code.USERNAMEERROR.getCode());
-        }catch (IncorrectCredentialsException e){
-            log.error( "密码错误");
+        } catch (IncorrectCredentialsException e) {
+            log.error("密码错误");
             return getResult("密码错误", Code.PASSWORDERROR.getCode());
         }
-        log.info("我的凭证:{}",session.getId().toString());
+        log.info("我的凭证:{}", session.getId().toString());
         String role = roleService.getRole(dto.getName());
         List<PermissionVO> permissonVOS = permissionService.getPermisson(role);
+        log.info("登录结束");
         return getResult(new LoginVO(permissonVOS, session.getId().toString()), Code.SUCCESS.getCode());
     }
+
     @GetMapping("/logout")
-    public Result logot(){
+    public Result logot() {
         log.info("登出");
         return getResult("退出", Code.SUCCESS.getCode());
     }
-
-
-
-
-
 }
 
 

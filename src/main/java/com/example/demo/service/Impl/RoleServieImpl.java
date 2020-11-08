@@ -24,8 +24,8 @@ public class RoleServieImpl implements IRoleService {
 
     @Override
     public String getRole(String name) {
-        log.info("sdasa:{}", roleMapper.getRole(name).toString());
         List<String> roles = roleMapper.getRole(name);
+        log.info("角色为:{}", roles.toString());
         if (!roles.isEmpty()) {
             return roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).isEmpty()
                     ? roles.get(0)
