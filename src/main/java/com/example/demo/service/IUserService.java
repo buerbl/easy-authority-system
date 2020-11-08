@@ -6,6 +6,7 @@ import com.example.demo.vo.UserVo;
 
 public interface IUserService {
     User getUserInfo(User user);
+
     User getUser(String name, String password);
 
     UserVo getUserPage(UserDto dto);

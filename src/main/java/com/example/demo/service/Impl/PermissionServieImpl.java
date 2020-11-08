@@ -9,8 +9,12 @@ import com.example.demo.vo.PermissionVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +27,7 @@ import java.util.Objects;
 @Service
 @Slf4j
 public class PermissionServieImpl implements IPermissionService {
-    @Autowired
+    @Resource
     private PermissionMapper permissionMapper;
 
     public Role getPermisson(Permisson permission) {
@@ -38,11 +42,11 @@ public class PermissionServieImpl implements IPermissionService {
     @Override
     public List<PermissionVO> getPermisson(String roleName) {
         if (Objects.isNull(roleName)){
-            return null;
+            return Collections.emptyList();
         }
         List<PermissionVO> permissons = permissionMapper.getPermissionByroleName(roleName);
-        List<PermissionVO> result = new ArrayList<PermissionVO>();
-        if (permissons.isEmpty()) {
+        List<PermissionVO> result = new ArrayList<>();
+        if (CollectionUtils.isEmpty(permissons)) {
             throw new RuntimeException("没有权限");
         }
         // 1、获取第一级节点
@@ -56,12 +60,11 @@ public class PermissionServieImpl implements IPermissionService {
             parent = recursiveTree(parent, permissons);
         }
         List<String> buttonPermissin = getButtonPermissin(permissons);
-        if (!result.isEmpty()) {
+        if (!CollectionUtils.isEmpty(result)) {
             result.get(0).setButtonPermissin(buttonPermissin);
         }
         log.info("树形结果：{}", JSONObject.toJSON(result));
         return result;
-//        return null;
     }
 
     @Override
@@ -72,11 +75,11 @@ public class PermissionServieImpl implements IPermissionService {
     private List<String> getButtonPermissin(List<PermissionVO> permissons) {
         List<String> buttonPermissins = new ArrayList<>();
         if (permissons.isEmpty()){
-            return null;
+            return Collections.emptyList();
         }
-        permissons.stream().forEach(a->{
+        permissons.forEach(a->{
             String typePath = a.getTypePath();
-            if (typePath != null && typePath.length() != 0){
+            if (!StringUtils.isEmpty(typePath)){
                 buttonPermissins.add(typePath);
             }
         });

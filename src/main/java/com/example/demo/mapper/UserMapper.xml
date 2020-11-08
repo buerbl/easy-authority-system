@@ -2,27 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.UserMapper">
     <resultMap id="user" type="com.example.demo.entity.User">
-        <id property="id" column="id"></id>
-        <result property="name" column="name"></result>
-        <result property="password" column="password"></result>
-        <result property="adress" column="adress"></result>
-        <result property="status" column="status"></result>
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="adress" column="adress"/>
+        <result property="status" column="status"/>
         <collection property="roleList" ofType="com.example.demo.entity.Role"
                     resultMap="role" columnPrefix="role_"
-        ></collection>
+        />
     </resultMap>
     <resultMap id="role" type="com.example.demo.entity.Role">
-        <id property="id" column="id"></id>
-        <result property="roleName" column="role_name"></result>
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
         <collection property="permissonList" ofType="com.example.demo.entity.Permisson"
                     resultMap="permisson" columnPrefix="permission_"
-        ></collection>
+        />
     </resultMap>
     <resultMap id="permisson" type="com.example.demo.entity.Permisson">
-        <id property="id" column="id"></id>
-        <result property="typName" column="type_name"></result>
-        <result property="typePath" column="type_path"></result>
-        <result property="typePid" column="type_pid"></result>
+        <id property="id" column="id"/>
+        <result property="typName" column="type_name"/>
+        <result property="typePath" column="type_path"/>
+        <result property="typePid" column="type_pid"/>
         <collection property="children"
                     column="id"
                     ofType="com.example.demo.entity.Permisson"
@@ -30,30 +30,30 @@
         </collection>
     </resultMap>
     <resultMap id="userAndRole" type="com.example.demo.entity.User">
-        <id property="id" column="id"></id>
-        <result property="name" column="name"></result>
-        <result property="password" column="password"></result>
-        <result property="adress" column="adress"></result>
-        <result property="status" column="status"></result>
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="password" column="password"/>
+        <result property="adress" column="adress"/>
+        <result property="status" column="status"/>
         <collection property="roleList" ofType="com.example.demo.entity.Role"
                     resultMap="roleListNoPermisson"
-        ></collection>
+        />
     </resultMap>
     <resultMap id="roleListNoPermisson" type="com.example.demo.entity.Role">
-        <id property="id" column="rid"></id>
-        <result property="roleName" column="role_name"></result>
+        <id property="id" column="rid"/>
+        <result property="roleName" column="role_name"/>
     </resultMap>
 
     <sql id="role_Column_List">
-    role.id as role_Id, role.role_name as role_role_name,
-</sql>
+        role.id as role_Id, role.role_name as role_role_name,
+    </sql>
 
     <sql id="permisson_Column_List">
-    permission.id as role_permission_id,
+        permission.id as role_permission_id,
      permission.type_name as role_permission_type_name,
      permission.type_path as role_permission_type_path,
     permission.type_pid as role_permission_type_pid
-</sql>
+    </sql>
     <select id="getUserInfo" resultMap="user">
         SELECT
         `user`.*,
@@ -108,10 +108,10 @@
         LEFT JOIN role r ON ur.role_id = r.id
         WHERE
         1 =1
-        <if test="name != null and  name!=''" >
+        <if test="name != null and  name!=''">
             and NAME = #{name}
         </if>
-        <if test="name == null or  name==''" >
+        <if test="name == null or  name==''">
             limit #{start}, #{size}
         </if>
 
@@ -130,10 +130,9 @@
         </if>
 
     </select>
-    <update id="changeStatuFlag" >
+    <update id="changeStatuFlag">
         UPDATE user
-            SET `status` = #{flag}
-        WHERE
-        id = #{id}
+        SET `status` = #{flag}
+        WHERE id = #{id}
     </update>
 </mapper>

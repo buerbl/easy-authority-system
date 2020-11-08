@@ -65,10 +65,10 @@ public class ShiroLoginController extends BaseResult {
         try {
             subject.login(token);
         } catch (UnknownAccountException e){
-            log.info("msg", "用户名不存在");
+            log.error("用户名[{}]]不存在", dto.getName());
             return getResult("用户名不存在", Code.USERNAMEERROR.getCode());
         }catch (IncorrectCredentialsException e){
-            log.info( "密码错误");
+            log.error( "密码错误");
             return getResult("密码错误", Code.PASSWORDERROR.getCode());
         }
         log.info("我的凭证:{}",session.getId().toString());

@@ -17,13 +17,13 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-     User getUserInfo(@Param("user")  User user);
+    User getUserInfo(@Param("user") User user);
 
-     User getUser(@Param("name") String name, @Param("password") String password);
+    User getUser(@Param("name") String name, @Param("password") String password);
 
-     List<User> getUserPage(@Param("name") String name,@Param("start") Integer start, @Param("size")Integer size);
+    List<User> getUserPage(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
-     Integer getTotal (@Param("name") String name, @Param("start") Integer start, @Param("size")Integer size);
+    Integer getTotal(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
     Boolean changeStatuFlag(@Param("flag") Integer flag, @Param("id") Integer id);
 }

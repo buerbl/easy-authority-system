@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class UserServieImpl implements IUserService {
-    @Autowired
+    @Resource
     private UserMapper userMapper;
+
     public User getUserInfo(User user) {
         return userMapper.getUserInfo(user);
     }
@@ -38,14 +40,14 @@ public class UserServieImpl implements IUserService {
     public UserVo getUserPage(UserDto dto) {
         String name = Optional.ofNullable(dto.getUser()).map(User::getName).orElse(null);
         String adress = Optional.ofNullable(dto.getUser()).map(User::getAdress).orElse(null);
-        Integer start = ( dto.getPagenum() - 1 ) * dto.getSize();
+        Integer start = (dto.getPagenum() - 1) * dto.getSize();
         Integer size = dto.getSize();
         List<User> userPage = userMapper.getUserPage(name, start, size);
-        userPage.stream().forEach(user -> {
-            if (user.getStatus() == StatusEnum.RIGHT.getCode()){
+        userPage.forEach(user -> {
+            if (user.getStatus() == StatusEnum.RIGHT.getCode()) {
                 user.setStatuFlag(true);
             }
-            if (user.getStatus() == StatusEnum.WRONG.getCode()){
+            if (user.getStatus() == StatusEnum.WRONG.getCode()) {
                 user.setStatuFlag(false);
             }
         });

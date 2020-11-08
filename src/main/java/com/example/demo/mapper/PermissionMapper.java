@@ -16,6 +16,7 @@ import java.util.List;
 @Mapper
 public interface PermissionMapper {
     Role getPermission(Permisson permission);
+
     List<Permisson> getTree(int pid);
 
     List<PermissionVO> getPermissionByroleName(String roleName);

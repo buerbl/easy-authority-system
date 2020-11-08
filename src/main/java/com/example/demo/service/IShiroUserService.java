@@ -7,6 +7,7 @@ import com.example.demo.vo.ShiroUserVo;
 public interface IShiroUserService {
     /**
      * 登录方法
+     *
      * @param name
      * @param password
      * @return
@@ -15,6 +16,7 @@ public interface IShiroUserService {
 
     /**
      * 分页查询
+     *
      * @param dto
      * @return
      */

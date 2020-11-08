@@ -13,11 +13,11 @@ import java.util.List;
  */
 @Mapper
 public interface ShiroUserMapper {
-     ShiroUser getUser(@Param("name") String name, @Param("password") String password);
+    ShiroUser getUser(@Param("name") String name, @Param("password") String password);
 
-     List<ShiroUser> getUserPage(@Param("name") String name,@Param("start") Integer start, @Param("size")Integer size);
+    List<ShiroUser> getUserPage(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
-     Integer getTotal (@Param("name") String name, @Param("start") Integer start, @Param("size")Integer size);
+    Integer getTotal(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 }
 
 

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,8 +21,9 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class ShiroUserServieImpl implements IShiroUserService {
-    @Autowired
+    @Resource
     private ShiroUserMapper shiroUserMapper;
+
     @Override
     public ShiroUser getUser(String name, String password) {
         log.info("name为{}, password为{}", name, password);
@@ -31,7 +33,7 @@ public class ShiroUserServieImpl implements IShiroUserService {
     @Override
     public ShiroUserVo getUserPage(ShiroUserDto dto) {
         String name = Optional.ofNullable(dto.getShiroUser()).map(ShiroUser::getName).orElse(null);
-        Integer start = ( dto.getPagenum() - 1 ) * dto.getSize();
+        Integer start = (dto.getPagenum() - 1) * dto.getSize();
         Integer size = dto.getSize();
         List<ShiroUser> shiroUserList = shiroUserMapper.getUserPage(name, start, size);
         Integer total = shiroUserMapper.getTotal(name, start, size);

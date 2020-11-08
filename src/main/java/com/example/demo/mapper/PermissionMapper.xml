@@ -3,17 +3,17 @@
 <mapper namespace="com.example.demo.mapper.PermissionMapper">
 
     <resultMap id="role" type="com.example.demo.entity.Role">
-        <id property="id" column="id"></id>
-        <result property="roleName" column="role_name"></result>
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
         <collection property="permissonList" ofType="com.example.demo.entity.Permisson"
                     resultMap="permisson" columnPrefix="permission_"
-        ></collection>
+        />
     </resultMap>
     <resultMap id="permisson" type="com.example.demo.entity.Permisson">
-        <id property="id" column="id"></id>
-        <result property="typName" column="type_name"></result>
-        <result property="typePath" column="type_path"></result>
-        <result property="typePid" column="type_pid"></result>
+        <id property="id" column="id"/>
+        <result property="typName" column="type_name"/>
+        <result property="typePath" column="type_path"/>
+        <result property="typePid" column="type_pid"/>
         <collection property="children"
                     column="id"
                     ofType="com.example.demo.entity.Permisson"
@@ -22,53 +22,46 @@
     </resultMap>
 
     <resultMap id="getPermissionByroleName" type="com.example.demo.vo.PermissionVO">
-        <result property="rid" column="rid"></result>
-        <result property="roleName" column="role_name"></result>
-        <result property="rpId" column="rpId"></result>
-        <result property="pid" column="pid"></result>
-        <result property="ppid" column="ppid"></result>
-        <result property="typeName" column="type_name"></result>
-        <result property="typePath" column="type_path"></result>
+        <result property="rid" column="rid"/>
+        <result property="roleName" column="role_name"/>
+        <result property="rpId" column="rpId"/>
+        <result property="pid" column="pid"/>
+        <result property="ppid" column="ppid"/>
+        <result property="typeName" column="type_name"/>
+        <result property="typePath" column="type_path"/>
     </resultMap>
 
     <select id="getPermission" resultMap="role">
-        SELECT
-	role.*,
-	permission.id AS permission_id,
-	permission.type_name AS permission_type_name,
-	permission.type_path AS permission_type_path,
-	permission.type_pid AS permission_type_pid
-FROM role
-	LEFT JOIN role_permisson ON role_permisson.role_id = role.id
-	LEFT JOIN permission ON permission.id = role_permisson.permission_id
-WHERE
-	role.id =1
+        SELECT role.*,
+               permission.id        AS permission_id,
+               permission.type_name AS permission_type_name,
+               permission.type_path AS permission_type_path,
+               permission.type_pid  AS permission_type_pid
+        FROM role
+                 LEFT JOIN role_permisson ON role_permisson.role_id = role.id
+                 LEFT JOIN permission ON permission.id = role_permisson.permission_id
+        WHERE role.id = 1
     </select>
 
 
-
     <select id="getTree" resultMap="permisson">
-        select
-        *
+        select *
         from permission
         where type_pid = #{pid}
     </select>
 
     <select id="getPermissionByroleName" resultMap="getPermissionByroleName">
-       SELECT
-            r.id AS rid,
-            r.role_name AS role_name,
-            rp.id AS rpId,
-            p.id AS pid,
-            p.type_pid AS ppid,
-            p.type_name AS type_name,
-            p.type_path AS type_path
-        FROM
-            role r
-            LEFT JOIN role_permisson rp ON r.id = rp.role_id
-            LEFT JOIN permission p ON rp.permission_id = p.id
-        WHERE
-            r.role_name = #{roleName}
+        SELECT r.id        AS rid,
+               r.role_name AS role_name,
+               rp.id       AS rpId,
+               p.id        AS pid,
+               p.type_pid  AS ppid,
+               p.type_name AS type_name,
+               p.type_path AS type_path
+        FROM role r
+                 LEFT JOIN role_permisson rp ON r.id = rp.role_id
+                 LEFT JOIN permission p ON rp.permission_id = p.id
+        WHERE r.role_name = #{roleName}
     </select>
 
 </mapper>

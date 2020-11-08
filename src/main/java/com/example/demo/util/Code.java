@@ -1,7 +1,7 @@
 package com.example.demo.util;
 
-        import lombok.AllArgsConstructor;
-        import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor

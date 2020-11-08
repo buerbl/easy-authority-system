@@ -7,7 +7,14 @@ import com.example.demo.vo.PermissionVO;
 import java.util.List;
 
 public interface IPermissionService {
+    /**
+     *
+     * @param permisson
+     * @return
+     */
     Role getPermisson(Permisson permisson);
+
+
     List<Permisson> getTree();
 
     /**

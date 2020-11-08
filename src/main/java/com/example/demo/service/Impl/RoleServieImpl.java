@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,23 +19,21 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class RoleServieImpl implements IRoleService {
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
+
     @Override
     public String getRole(String name) {
-        log.info("sdasa:{}",roleMapper.getRole(name).toString());
+        log.info("sdasa:{}", roleMapper.getRole(name).toString());
         List<String> roles = roleMapper.getRole(name);
-        if (!roles.isEmpty()){
+        if (!roles.isEmpty()) {
             return roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).isEmpty()
-                    ?roles.get(0)
-                    :roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).get(0);
-        }else {
+                    ? roles.get(0)
+                    : roles.stream().filter(s -> s.equals("admin")).collect(Collectors.toList()).get(0);
+        } else {
             return "没有角色";
         }
     }
-
-
-
 }
 
 
