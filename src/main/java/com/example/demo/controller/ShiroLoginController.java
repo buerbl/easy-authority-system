@@ -35,8 +35,6 @@ import java.util.List;
 public class ShiroLoginController extends BaseResult {
 
     @Autowired
-    private IShiroUserService shiroUserService;
-    @Autowired
     private IRoleService roleService;
     @Autowired
     private IPermissionService permissionService;
