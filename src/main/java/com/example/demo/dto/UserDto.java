@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @Description:
  * @Author: boolean
@@ -13,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserDto implements Serializable {
     private User user;
     private Integer total;
     private Integer pagenum=1;

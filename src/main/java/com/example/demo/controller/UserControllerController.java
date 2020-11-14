@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ChangeStatuFlagDTO;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.service.IUserService;
@@ -41,9 +42,11 @@ public class UserControllerController extends BaseResult {
 
     @RequiresPermissions("user-update")
     @PostMapping("/changeStatuFlag")
-    public Result changeStatuFlag(@RequestBody UserDto dto){
-        log.info("dto为：{}", dto.toString());
-        return getResult(userService.changeStatuFlag(dto), Code.SUCCESS.getCode());
-//        return null;
+    public Result changeStatuFlag(@RequestBody ChangeStatuFlagDTO changeStatuFlagDTO){
+        log.info("changeStatuFlag-改变状态开始");
+        log.info("dto为：{}", changeStatuFlagDTO.toString());
+        Boolean data = userService.changeStatuFlag(changeStatuFlagDTO);
+        log.info("changeStatuFlag-改变状态结束");
+        return getResult(data, Code.SUCCESS.getCode());
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.Impl;
 
+import com.example.demo.dto.ChangeStatuFlagDTO;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
@@ -65,9 +66,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Boolean changeStatuFlag(UserDto dto) {
-        Integer flag = dto.getUser().getStatus();
-        Integer id = dto.getUser().getId();
+    public Boolean changeStatuFlag(ChangeStatuFlagDTO changeStatuFlagDTO) {
+        Integer flag = changeStatuFlagDTO.getStatus();
+        Integer id = changeStatuFlagDTO.getId();
         return userMapper.changeStatuFlag(flag, id);
     }
 
