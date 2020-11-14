@@ -56,7 +56,7 @@ public class ShiroLoginController extends BaseResult {
     @PostMapping("/login")
     public Result login(@RequestBody ShiroUser dto) {
         log.info("登录开始");
-        log.info("用户名为[{}], 密码为[{}]",dto.getName(), dto.getPassword());
+        log.info("用户名为[{}], 密码为[{}]", dto.getName(), dto.getPassword());
         // 1. 获取 Subject
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
@@ -79,7 +79,7 @@ public class ShiroLoginController extends BaseResult {
     }
 
     @GetMapping("/logout")
-    public Result logot() {
+    public Result logout() {
         log.info("登出");
         return getResult("退出", Code.SUCCESS.getCode());
     }
