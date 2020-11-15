@@ -14,4 +14,5 @@ import java.util.List;
 public class LoginVO {
     private List<PermissionVO> permissionVOS;
     private String session;
+    private String username;
 }

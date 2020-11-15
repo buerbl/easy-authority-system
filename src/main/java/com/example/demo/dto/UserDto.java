@@ -13,8 +13,6 @@ import java.io.Serializable;
  * @Date: 2020/2/3 15:15
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserDto implements Serializable {
     private User user;
     private Integer total;

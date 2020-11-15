@@ -1,8 +1,6 @@
 package com.example.demo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -12,15 +10,17 @@ import java.util.List;
  * @create 2020/4/26 18:06
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class User {
-    @NotNull
+//    @NotNull
     private Integer id;
     @NotNull
     private String name;
     private String password;
     private String adress;
+
+    private Integer sex;
+
+    private String sexStr;
 
     private Integer status;
     private Boolean statuFlag;

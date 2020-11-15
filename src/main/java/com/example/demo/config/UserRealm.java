@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Description:
@@ -81,6 +82,7 @@ public class UserRealm extends AuthorizingRealm {
         log.info("执行认证逻辑开始");
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         User userByName = userService.getUserByName(token1.getUsername());
+        log.info("数据库密码为[{}]", userByName.getPassword());
         // 判断用户名
         if (userByName == null) {
             //为 null  则 shiro 抛出 UnaKnowAccountException

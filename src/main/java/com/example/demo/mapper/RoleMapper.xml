@@ -4,8 +4,8 @@
     <select id="getRole" resultType="string">
         SELECT role_name
         FROM `user` u
-                 LEFT JOIN user_role ur ON u.id = ur.user_id
-                 LEFT JOIN role r ON ur.role_id = r.id
+                  JOIN user_role ur ON u.id = ur.user_id
+                  JOIN role r ON ur.role_id = r.id
         WHERE u.`name` = #{name}
     </select>
 </mapper>

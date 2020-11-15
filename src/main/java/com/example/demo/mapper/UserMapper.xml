@@ -103,20 +103,22 @@
         WHERE NAME = #{name}
     </select>
 
-    <select id="getUserPage" resultMap="userAndRole">
+    <select id="getUserPage" resultType="com.example.demo.entity.User">
         SELECT
-        u.*,
-        r.id as rid,
-        r.role_name
+        id,
+        name,
+        password,
+        adress,
+        status,
+        sex
         FROM
-        user u
-        LEFT JOIN user_role ur ON u.id = ur.user_id
-        LEFT JOIN role r ON ur.role_id = r.id
+        user
         WHERE
-        1 =1
+        1 =1 and id != 1
         <if test="name != null and  name!=''">
             and NAME = #{name}
         </if>
+        order by ctime desc
         <if test="name == null or  name==''">
             limit #{start}, #{size}
         </if>
@@ -141,4 +143,65 @@
         SET `status` = #{flag}
         WHERE id = #{id}
     </update>
+
+    <select id="getUserInfoById" resultType="com.example.demo.entity.User">
+        select name, password, adress, sex, id, status
+        from user
+        where id = #{id}
+    </select>
+    <select id="getUserRolePage" resultType="com.example.demo.vo.UserRoleVO">
+        select t1.name as username,
+        t3.role_name as roleName,
+        t1.id as id
+        from user t1
+        left join user_role t2 on t1.id = t2.user_id
+        left join role t3 on t2.role_id = t3.id
+        where 1 = 1
+        <if test="name != null and  name!=''">
+            and t1.name = #{name}
+        </if>
+        <if test="name == null or name==''">
+            limit #{start}, #{size}
+        </if>
+    </select>
+    <select id="getUserRoleTotal" resultType="java.lang.Integer">
+        select count(1)
+        from user t1
+        left join user_role t2 on t1.id = t2.user_id
+        left join role t3 on t2.role_id = t3.id
+        where 1 = 1
+        <if test="name != null and name!=''">
+            and t1.name = #{name}
+        </if>
+    </select>
+
+    <delete id="delUser" parameterType="integer">
+        delete
+        from user
+        where id = #{id}
+    </delete>
+
+    <update id="updateUserById" parameterType="com.example.demo.entity.User">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="adress != null and adress != ''">
+                adress = #{adress},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <insert id="addUser" parameterType="com.example.demo.entity.User">
+        insert into user(name, password, adress, sex)
+        values (#{name}, #{password}, #{adress}, #{sex})
+    </insert>
 </mapper>
