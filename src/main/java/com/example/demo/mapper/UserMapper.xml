@@ -200,7 +200,7 @@
         where id = #{id}
     </update>
 
-    <insert id="addUser" parameterType="com.example.demo.entity.User">
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.entity.User">
         insert into user(name, password, adress, sex)
         values (#{name}, #{password}, #{adress}, #{sex})
     </insert>

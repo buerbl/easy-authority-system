@@ -16,7 +16,6 @@ import java.util.List;
  * @Author: boolean
  * @Date: 2020/2/1 14:30
  */
-@Mapper
 public interface UserMapper {
 
     User getUserInfo(@Param("user") User user);

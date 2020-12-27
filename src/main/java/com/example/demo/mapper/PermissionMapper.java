@@ -13,7 +13,6 @@ import java.util.List;
  * @Date: 2020/2/1 14:30
  * com.example.demo.mapper.PermissionMappercom.example.demo.mapper.PermissionMapper#getTree()
  */
-@Mapper
 public interface PermissionMapper {
     Role getPermission(Permisson permission);
 

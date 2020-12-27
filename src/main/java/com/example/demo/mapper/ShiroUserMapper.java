@@ -11,7 +11,6 @@ import java.util.List;
  * @Author: boolean
  * @Date: 2020/2/1 14:30
  */
-@Mapper
 public interface ShiroUserMapper {
     ShiroUser getUser(@Param("name") String name, @Param("password") String password);
 
