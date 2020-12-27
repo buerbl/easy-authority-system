@@ -87,3 +87,7 @@ public String login(String name, String password, Model model){
         return "login";
     }
 ```
+
+## 打包
+
+mvn package -Dmaven.test.skip=true
