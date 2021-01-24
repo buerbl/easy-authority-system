@@ -156,14 +156,26 @@
         from user t1
         left join user_role t2 on t1.id = t2.user_id
         left join role t3 on t2.role_id = t3.id
-        where 1 = 1
+        where 1 = 1 and t1.id != 1
         <if test="name != null and  name!=''">
             and t1.name = #{name}
         </if>
+        order by t1.ctime desc
         <if test="name == null or name==''">
             limit #{start}, #{size}
         </if>
     </select>
+
+    <select id="getUserRolePageFor1" resultType="com.example.demo.vo.UserRoleVO">
+        select t1.name as username,
+        t3.role_name as roleName,
+        t1.id as id
+        from user t1
+        left join user_role t2 on t1.id = t2.user_id
+        left join role t3 on t2.role_id = t3.id
+        where t1.id = 1
+    </select>
+
     <select id="getUserRoleTotal" resultType="java.lang.Integer">
         select count(1)
         from user t1

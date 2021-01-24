@@ -40,6 +40,9 @@ public interface UserMapper {
 
     List<UserRoleVO> getUserRolePage(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
+
+    UserRoleVO getUserRolePageFor1();
+
     Integer getUserRoleTotal(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 }
 

@@ -131,6 +131,8 @@ public class UserServiceImpl implements IUserService {
         Integer start = (dto.getPagenum() - 1) * dto.getSize();
         Integer size = dto.getSize();
         List<UserRoleVO> userRolePage  = userMapper.getUserRolePage(name, start,size);
+        UserRoleVO rolePageFor1 = userMapper.getUserRolePageFor1();
+        userRolePage.add(0, rolePageFor1);
         Integer total = userMapper.getUserRoleTotal(name, start, size);
         UserRoleVoPage userRoleVoPage = new UserRoleVoPage();
         userRoleVoPage.setUserList(userRolePage);
