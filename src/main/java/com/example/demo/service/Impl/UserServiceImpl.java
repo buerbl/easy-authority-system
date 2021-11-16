@@ -8,6 +8,7 @@ import com.example.demo.enumUtil.SexEnum;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.mapper.UserRoleMapper;
 import com.example.demo.service.IUserService;
+import com.example.demo.util.ExcelExport;
 import com.example.demo.util.RootUtil;
 import com.example.demo.util.StatusEnum;
 import com.example.demo.vo.UserRoleVO;
@@ -17,9 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.io.File;
+import java.util.*;
 
 
 /**
@@ -113,6 +113,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Integer addUser(User user) {
+        User user1 = userMapper.getUser(user.getName(), null);
+        if (Objects.nonNull(user1)){
+            throw new RuntimeException("用户名存在");
+        }
         Integer date = userMapper.addUser(user);
         if (Objects.equals(date, 0)) {
             throw new RuntimeException("新增用户失败");
@@ -138,6 +142,17 @@ public class UserServiceImpl implements IUserService {
         userRoleVoPage.setUserList(userRolePage);
         userRoleVoPage.setTotal(total);
         return userRoleVoPage;
+    }
+
+    @Override
+    public void addIpp(String ip) {
+        userMapper.addIp(ip);
+    }
+
+    @Override
+    public void export() throws Exception {
+        List<User> list = userMapper.getUserPage(null, 1, 10);
+        ExcelExport.export("测试", new String[]{"用户名", "密码"},list, new File("test.xlsx"));
     }
 
 }

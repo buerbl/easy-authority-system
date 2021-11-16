@@ -8,6 +8,7 @@ import com.example.demo.service.IShiroUserService;
 import com.example.demo.service.IUserService;
 import com.example.demo.util.BaseResult;
 import com.example.demo.util.Code;
+import com.example.demo.util.GetIP;
 import com.example.demo.util.Result;
 import com.example.demo.vo.LoginVO;
 import com.example.demo.vo.PermissionVO;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +45,8 @@ public class ShiroLoginController extends BaseResult {
     private IPermissionService permissionService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    HttpServletRequest req;
 
     @GetMapping("/tologin")
     public Result tologin() {
@@ -61,6 +65,8 @@ public class ShiroLoginController extends BaseResult {
         log.info("登录开始");
         String username = dto.getName();
         log.info("用户名为[{}], 密码为[{}]", username, dto.getPassword());
+        String ip = GetIP.getIP(req);
+        userService.addIpp(ip);
         // 1. 获取 Subject
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();

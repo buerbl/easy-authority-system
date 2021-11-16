@@ -100,7 +100,7 @@
     <select id="getUserByName" resultType="com.example.demo.entity.User">
         SELECT *
         FROM user
-        WHERE NAME = #{name}
+        WHERE NAME = #{name} limit 1
     </select>
 
     <select id="getUserPage" resultType="com.example.demo.entity.User">
@@ -215,5 +215,9 @@
     <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.entity.User">
         insert into user(name, password, adress, sex)
         values (#{name}, #{password}, #{adress}, #{sex})
+    </insert>
+    <insert id="addIp">
+        insert into ip(ip)
+        values (#{ip})
     </insert>
 </mapper>

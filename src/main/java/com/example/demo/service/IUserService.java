@@ -48,4 +48,11 @@ public interface IUserService {
     Integer addUser(User user);
 
     UserRoleVoPage getUserRolePage(UserDto user);
+
+    void addIpp(String ip);
+
+    /**
+     * 导出excel
+     */
+    void export() throws Exception;
 }

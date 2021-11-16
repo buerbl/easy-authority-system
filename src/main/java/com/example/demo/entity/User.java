@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -13,9 +14,11 @@ import java.util.List;
 public class User {
 //    @NotNull
     private Integer id;
-    @NotNull
+    @NotBlank(message = "用户名不能为空")
     private String name;
+    @NotBlank(message = "密码不能为空")
     private String password;
+    @NotBlank(message = "地址不能为空")
     private String adress;
 
     private Integer sex;
