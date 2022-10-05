@@ -45,7 +45,7 @@ public interface UserMapper {
 
     Integer getUserRoleTotal(@Param("name") String name, @Param("start") Integer start, @Param("size") Integer size);
 
-    void addIp(@Param("ip") String ip);
+    void addIp(@Param("ip") String ip, @Param("location") String location);
 }
 
 

@@ -9,7 +9,10 @@ import java.util.Objects;
 public class RootUtil {
   public static String judgeRoot(Integer id){
       if (Objects.equals(id, 1)){
-          throw new RuntimeException("超级用户信息无法进行操作");
+          throw new RuntimeException("超级用户信息无法修改");
+      }
+      if (Objects.equals(id, 205)){
+          throw new RuntimeException("normal 用户信息无法修改");
       }
       return null;
   }

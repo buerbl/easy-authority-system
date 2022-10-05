@@ -1,9 +1,10 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +28,9 @@ public class User {
 
     private Integer status;
     private Boolean statuFlag;
+
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    private Date ctime;
 
     private List<Role> roleList;
 }

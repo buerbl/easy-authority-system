@@ -49,7 +49,7 @@ public interface IUserService {
 
     UserRoleVoPage getUserRolePage(UserDto user);
 
-    void addIpp(String ip);
+    void addIpp(String ip, String location);
 
     /**
      * 导出excel

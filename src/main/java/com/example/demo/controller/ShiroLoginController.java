@@ -1,15 +1,14 @@
 package com.example.demo.controller;
 
+import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.ShiroUser;
 import com.example.demo.entity.User;
 import com.example.demo.service.IPermissionService;
 import com.example.demo.service.IRoleService;
-import com.example.demo.service.IShiroUserService;
 import com.example.demo.service.IUserService;
-import com.example.demo.util.BaseResult;
-import com.example.demo.util.Code;
-import com.example.demo.util.GetIP;
-import com.example.demo.util.Result;
+import com.example.demo.util.*;
 import com.example.demo.vo.LoginVO;
 import com.example.demo.vo.PermissionVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,11 +19,13 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
@@ -45,8 +46,11 @@ public class ShiroLoginController extends BaseResult {
     private IPermissionService permissionService;
     @Autowired
     private IUserService userService;
-    @Autowired
+    @Resource
     HttpServletRequest req;
+
+    @Value(value = "${map.key}")
+    private String key;
 
     @GetMapping("/tologin")
     public Result tologin() {
@@ -62,11 +66,23 @@ public class ShiroLoginController extends BaseResult {
 
     @PostMapping("/login")
     public Result login(@RequestBody ShiroUser dto) {
-        log.info("登录开始");
+        log.info("登录开始了");
         String username = dto.getName();
         log.info("用户名为[{}], 密码为[{}]", username, dto.getPassword());
-        String ip = GetIP.getIP(req);
-        userService.addIpp(ip);
+        try {
+            String ip = GetIP.getIP(req);
+            String post = HttpUtil.get("https://apis.map.qq.com/ws/location/v1/ip?key="+key+"&ip="+ip);
+            JSONObject jsonObject  = JSON.parseObject(post);
+            JSONObject result = (JSONObject) jsonObject.get("result");
+            JSONObject ad_info = (JSONObject) result.get("ad_info");
+            String province = ad_info.getString("province");
+            String city = ad_info.getString("city");
+
+            userService.addIpp(ip, province+city);
+        }catch (Exception e){
+
+        }
+
         // 1. 获取 Subject
         Subject subject = SecurityUtils.getSubject();
         Session session = subject.getSession();
@@ -88,7 +104,7 @@ public class ShiroLoginController extends BaseResult {
         log.info("我的凭证:{}", session.getId().toString());
         String role = roleService.getRole(username);
         List<PermissionVO> permissonVOS = permissionService.getPermisson(role);
-        log.info("登录结束");
+        log.info("登录结束了");
         return getResult(new LoginVO(permissonVOS, session.getId().toString(), username), Code.SUCCESS.getCode());
     }
 

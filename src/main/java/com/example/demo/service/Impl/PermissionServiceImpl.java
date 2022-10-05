@@ -7,7 +7,6 @@ import com.example.demo.mapper.PermissionMapper;
 import com.example.demo.service.IPermissionService;
 import com.example.demo.vo.PermissionVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;

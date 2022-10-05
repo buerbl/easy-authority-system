@@ -110,7 +110,8 @@
         password,
         adress,
         status,
-        sex
+        sex,
+        ctime
         FROM
         user
         WHERE
@@ -145,7 +146,7 @@
     </update>
 
     <select id="getUserInfoById" resultType="com.example.demo.entity.User">
-        select name, password, adress, sex, id, status
+        select name, password, adress, sex, id, status, ctime
         from user
         where id = #{id}
     </select>
@@ -217,7 +218,7 @@
         values (#{name}, #{password}, #{adress}, #{sex})
     </insert>
     <insert id="addIp">
-        insert into ip(ip)
-        values (#{ip})
+        insert into ip(ip,location)
+        values (#{ip}, #{location})
     </insert>
 </mapper>

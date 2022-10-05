@@ -145,8 +145,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void addIpp(String ip) {
-        userMapper.addIp(ip);
+    public void addIpp(String ip, String location) {
+        userMapper.addIp(ip,location);
     }
 
     @Override
