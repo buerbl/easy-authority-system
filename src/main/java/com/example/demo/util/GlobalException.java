@@ -54,6 +54,7 @@ public class GlobalException {
         return result;
     }
 
+    
     @ExceptionHandler({Exception.class})
     public Result exception(Exception e) {
         Result result = new Result();
