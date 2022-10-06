@@ -12,7 +12,7 @@ import lombok.Getter;
 public enum StatusEnum {
 
     RIGHT(1, "正常"),
-    
+
     WRONG(0, "灰色"),
     ;
     private int code;
