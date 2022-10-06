@@ -14,7 +14,7 @@ public enum StatusEnum {
     RIGHT(1, "正常1211"),
 
     
-    WRONG(0, "灰色33"),
+    WRONG(0, "灰色33111"),
     ;
     private int code;
     private String msg;
