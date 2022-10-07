@@ -11,7 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StatusEnum {
 
-    RIGHT(1, "正常11"),
+    RIGHT(1, "正常"),
 
     
     WRONG(0, "灰色"),
