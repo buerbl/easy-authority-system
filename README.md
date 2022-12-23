@@ -1,6 +1,6 @@
 # easy-authority-system
 
-## [在线访问](http://47.105.202.146:8081/)
+## [在线访问](http://124.71.71.112:8081/)
 
 ## [前端项目](https://github.com/buerbl/vue-dmin)
 
