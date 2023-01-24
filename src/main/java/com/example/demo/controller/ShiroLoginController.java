@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import cn.hutool.core.date.StopWatch;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.entity.ShiroUser;
 import com.example.demo.entity.User;
@@ -49,9 +51,6 @@ public class ShiroLoginController extends BaseResult {
     @Resource
     HttpServletRequest req;
 
-    @Value(value = "${map.key}")
-    private String key;
-
     @GetMapping("/tologin")
     public Result tologin() {
         log.info("没有登录");
@@ -71,14 +70,7 @@ public class ShiroLoginController extends BaseResult {
         log.info("用户名为[{}], 密码为[{}]", username, dto.getPassword());
         try {
             String ip = GetIP.getIP(req);
-            String post = HttpUtil.get("https://apis.map.qq.com/ws/location/v1/ip?key="+key+"&ip="+ip);
-            JSONObject jsonObject  = JSON.parseObject(post);
-            JSONObject result = (JSONObject) jsonObject.get("result");
-            JSONObject ad_info = (JSONObject) result.get("ad_info");
-            String province = ad_info.getString("province");
-            String city = ad_info.getString("city");
-
-            userService.addIpp(ip, province+city);
+            getIp(ip);
         }catch (Exception e){
 
         }
@@ -107,6 +99,21 @@ public class ShiroLoginController extends BaseResult {
         log.info("登录结束了");
         return getResult(new LoginVO(permissonVOS, session.getId().toString(), username), Code.SUCCESS.getCode());
     }
+
+    private void getIp(String ip) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start("获取ip时间");
+        String post = HttpUtil.get("https://opendata.baidu.com/api.php?query="+ip+"&co=&resource_id=6006&oe=utf8");
+        JSONObject jsonObject  = JSON.parseObject(post);
+        stopWatch.stop();
+        log.info("获取ip时间为{}", stopWatch.getTotalTimeSeconds());
+        JSONArray result = (JSONArray) jsonObject.get("data");
+        JSONObject data = (JSONObject) result.get(0);
+        String location = data.getString("location");
+
+        userService.addIpp(ip, location);
+    }
+
 
     @GetMapping("/logout")
     public Result logout() {
