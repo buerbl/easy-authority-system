@@ -1,6 +1,5 @@
 HELP.md
 target/
-/src/test/**
 .idea
 *.iws
 *.iml
